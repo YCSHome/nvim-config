@@ -15,4 +15,6 @@ return require('packer').startup(function()
   use 'neoclide/coc.nvim'
   use 'skywind3000/asyncrun.vim'
   use 'voldikss/vim-floaterm'
+  use 'sainnhe/edge'
+  use 'sheerun/vim-polyglot'
 end)
