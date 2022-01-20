@@ -17,3 +17,5 @@ opt.mouse      	= "a"
 opt.undofile    = true
 
 opt.termguicolors = true
+
+vim.cmd([[set cinoptions+=g0]])

@@ -17,4 +17,5 @@ return require('packer').startup(function()
   use 'voldikss/vim-floaterm'
   use 'sainnhe/edge'
   use 'sheerun/vim-polyglot'
+  use 'iamcco/markdown-preview.nvim'
 end)
