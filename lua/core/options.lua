@@ -18,4 +18,7 @@ opt.undofile    = true
 
 opt.termguicolors = true
 
+
 vim.cmd([[set cinoptions+=g0]])
+vim.cmd([[set nobackup]])
+vim.cmd([[let g:mkdp_auto_start=1]])

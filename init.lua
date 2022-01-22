@@ -1,3 +1,4 @@
+vim.cmd([[packadd packer.nvim]])
 local modules = {
   "core.options",
   "core.code",
@@ -6,8 +7,9 @@ local modules = {
   "plugins.config.coc"
 }
 
+require("plugins.init")
+
 for _, module in ipairs(modules) do
   require(module)
 end
 
-require("plugins.init")

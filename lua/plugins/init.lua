@@ -18,4 +18,5 @@ return require('packer').startup(function()
   use 'sainnhe/edge'
   use 'sheerun/vim-polyglot'
   use 'iamcco/markdown-preview.nvim'
+  use 'mg979/vim-visual-multi'
 end)
