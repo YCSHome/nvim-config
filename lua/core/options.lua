@@ -8,7 +8,7 @@ opt.cindent     = true
 opt.undofile    = true
 opt.wrap        = false
 opt.number      = true
-opt.cul         = true
+opt.cul         = false
 
 opt.tabstop     = 2
 

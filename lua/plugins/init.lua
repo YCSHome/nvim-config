@@ -19,4 +19,13 @@ return require('packer').startup(function()
   use 'sheerun/vim-polyglot'
   use 'iamcco/markdown-preview.nvim'
   use 'mg979/vim-visual-multi'
+  use 'wakatime/vim-wakatime'
+  use 'taigacute/dashboard-nvim'
+
+  -- Game
+  use 'ThePrimeagen/vim-be-good'
+  use 'ThePrimeagen/vim-apm'
+  use 'seandewar/nvimesweeper'
+  use 'alec-gibson/nvim-tetris'
+  
 end)
