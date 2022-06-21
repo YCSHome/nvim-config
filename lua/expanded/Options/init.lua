@@ -23,18 +23,13 @@ local GlobalOptions = {
   background        = "dark",
 }
 
-local M = {
-}
-
-M.LoadOptions = function()
-  for key, value in pairs(OptOptions) do
-    vim.opt[key] = value
-  end
-  for key, value in pairs(GlobalOptions) do
-    vim.g[key]   = value
-  end
+for key, value in pairs(OptOptions) do
+	vim.opt[key] = value
 end
 
-vim.cmd([[set cinoptions+=g0]])
+for key, value in pairs(GlobalOptions) do
+	vim.g[key]   = value
+end
 
-return M
+vim.api.nvim_command("set cinoptions+=g0")
+

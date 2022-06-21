@@ -1,6 +1,3 @@
---vim.api.nvim_set_keymap('n', '<leader>b', ':lua RunCode()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>ft', ':FloatermNew<CR>', { noremap = true, silent = true })
-
 local BuildOption = {
   ["focus"] = 0,
   ["save"] = 2,
@@ -88,3 +85,4 @@ AddCodeTypeList("<leader>b", {
     }
   }
   )
+
