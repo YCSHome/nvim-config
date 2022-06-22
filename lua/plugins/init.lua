@@ -58,7 +58,7 @@ local plugins = {
   },
 
   ['hrsh7th/vim-vsnip'] = {
-    after = "vim-vsnip",
+    after = "cmp-vsnip",
   },
 }
 
