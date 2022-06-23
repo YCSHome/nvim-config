@@ -1,1 +1,3 @@
+Config = "default"
+
 require("core")

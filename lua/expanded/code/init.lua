@@ -1,88 +1,82 @@
-local BuildOption = {
-  ["focus"] = 0,
-  ["save"] = 2,
-  ["mode"] = "term",
-  ["rows"] = 10
-}
+local M = { }
 
-local AsyncRun = function(opt, cmd)
-  vim.call("asyncrun#run", "!", opt, cmd)
-end
+M.codeList = { }
 
-function table.merge(table1, table2)
-  for key, value in pairs(table2) do
-    table1[key] = value
-  end
-  return table1
-end
+M.config = { }
 
-Code = {
+M.code = {
   RunByCodeTypeList = function(CodeTypeList)
-    FileType = vim.opt.filetype["_value"]
-
     for _, CodeType in pairs(CodeTypeList) do
       if (CodeType.check() == true) then
         CodeType.run()
         return 0
       end
     end
-    print("not such code type "..tostring(#CodeTypeList))
+    print("not such type")
   end,
 
-  BaseCodeType = {
-    check = function()
-      return false
-    end,
-    run = function()
-    end
-  }
+  options = {
+    ["focus"] = 0,
+    ["save"] = 2,
+    ["mode"] = "term",
+    ["rows"] = 10
+  },
+
+  run = function(opt, cmd)
+    vim.call("asyncrun#run", "!", opt, cmd)
+  end,
 }
 
-CodeTypeList = { }
-
-function AddCodeTypeList(Key, List)
-  table.insert(CodeTypeList, List)
-  vim.api.nvim_set_keymap("n", Key, ":lua Code.RunByCodeTypeList(CodeTypeList["..tostring(#CodeTypeList).."])<CR>", {noremap = true, silent = true})
-end
-
-Code.Cpp = {
+M.codeList.Cpp = {
   check = function()
+    local FileType = vim.opt.filetype._value
     if (FileType == 'cpp') then
       return true
     end
   end,
   run = function()
-    AsyncRun(BuildOption, "clang++ $(VIM_FILENAME) && echo build && ./a.out<~/.input && echo done")
+    M.code.run(M.code.options, "clang++ $(VIM_FILENAME) && echo build && ./a.out<~/.input && echo done")
   end
 }
 
-Code.Lua = {
+M.codeList.Lua = {
   check = function()
+    local FileType = vim.opt.filetype._value
     if (FileType == 'lua') then
       return true
     end
   end,
 
   run = function()
-    AsyncRun(BuildOption, "lua $(VIM_FILENAME)")
+    M.code.run(M.code.options, "lua $(VIM_FILENAME)")
   end
 }
 
-table.merge(CodeTypeList, Code)
+M.codeList.python = {
+  check = function()
+    local FileType = vim.opt.filetype._value
+    if (FileType == 'python') then
+      return true
+    end
+  end,
+  run = function()
+    M.code.run(M.code.options, "python3 $(VIM_FILENAME)")
+  end
+}
 
-AddCodeTypeList("<leader>b", {
-    Code.Cpp,
-    Code.Lua,
+M.config.mappings = {
+  ["<leader>b"] = {
+    "n",
+    function()
+      M.code.RunByCodeTypeList(M.codeList)
+    end,
     {
-      check = function()
-        if (FileType == 'python') then
-          return true
-        end
-      end,
-      run = function()
-        AsyncRun(BuildOption, "python3 $(VIM_FILENAME)")
-      end
-    }
+      noremap = true,
+      silent = true,
+    },
   }
-  )
+}
 
+require("core.utils").load_config(M.config)
+
+return M

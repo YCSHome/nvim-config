@@ -1,7 +1,13 @@
 System = vim.fn.system("uname")
+LspConfig = { }
+
+local ok, _ = pcall(require, "config."..Config)
+
+if not ok then
+  Config = "default"
+end
 
 require("core.packer").bootstrap()
-
 require("plugins")
 
 for _, mod in pairs(require("expanded").mods) do
@@ -13,3 +19,5 @@ for _, mod in pairs(require("expanded").mods) do
 		require(mod)
 	end
 end
+
+require("core.utils").load_config(require("config."..Config))

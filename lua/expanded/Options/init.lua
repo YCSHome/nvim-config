@@ -16,6 +16,7 @@ local OptOptions = {
   relativenumber    = true,
   hlsearch          = false,
   backup            = false,
+  cinoptions        = "g0",
 }
 
 local GlobalOptions = {
@@ -30,6 +31,3 @@ end
 for key, value in pairs(GlobalOptions) do
 	vim.g[key]   = value
 end
-
-vim.api.nvim_command("set cinoptions+=g0")
-

@@ -16,10 +16,8 @@ local plugins = {
   },                               -- 高亮着色
 
   ['neovim/nvim-lspconfig'] = {
-    opt = true,
-    ft = {"cpp", "lua", "c", "python", "sh"},
     config = function()
-      require("expanded.Lsp")
+      require("plugins.configs.lspconfig")
     end
   },                               -- Lsp 服务器
 
