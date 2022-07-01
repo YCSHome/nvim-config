@@ -1,10 +1,13 @@
 System = vim.fn.system("uname")
+if System ~= "Linux" then
+	System = "Windows"
+end
 LspConfig = { }
 
 local ok, _ = pcall(require, "config."..Config)
 
 if not ok then
-  Config = "default"
+	Config = "default"
 end
 
 require("core.packer").bootstrap()

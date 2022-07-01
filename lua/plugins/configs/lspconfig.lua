@@ -2,6 +2,6 @@
 
 local lspconfig = require("lspconfig")
 
-for name, value in pairs(LspConfg) do
+for name, value in pairs(LspConfig) do
   lspconfig[name].setup(value)
 end

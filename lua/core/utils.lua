@@ -1,5 +1,7 @@
 local M = { }
 
+local cmd = vim.api.nvim_command
+
 M.merge_plugins = function(plugins) 
   local final_plugins = { }
 
@@ -47,6 +49,8 @@ M.load_config = function(config)
       M.load_mappings(value)
     elseif key == "lsp" then
       M.add_lsp(value)
+    elseif key == "ui" then
+      cmd("color "..value.theme)
     end
   end
 end

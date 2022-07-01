@@ -1,3 +1,3 @@
-Config = "default"
+Config = "liuyi"
 
 require("core")

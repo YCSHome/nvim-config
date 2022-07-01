@@ -12,11 +12,6 @@ local config = {
   },
   lsp = {
     clangd = {
-      settings = {
-        filtypes = {
-          "c"
-        }
-      }
     }
   },
 }
