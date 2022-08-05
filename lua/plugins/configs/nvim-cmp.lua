@@ -15,6 +15,9 @@ cmp.setup({
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
   },
+  experimental = {
+    ghost_text = true,
+  },
   formatting = {
     format = lspkind.cmp_format({
       with_text = true, -- do not show text alongside icons

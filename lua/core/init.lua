@@ -1,6 +1,7 @@
 System = vim.fn.system("uname")
-if System ~= "Linux" then
-	System = "Windows"
+if System == "Linux" then
+else
+  System = "Windows"
 end
 LspConfig = { }
 

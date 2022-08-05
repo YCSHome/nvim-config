@@ -36,12 +36,12 @@ M.run = function(plugins)
     return
   end
 
-  plugins = require("core.utils").merge_plugins(plugins)
+  local temp = require("core.utils").merge_plugins(plugins)
 
   packer.init(M.options)
 
   packer.startup(function(use)
-    for _, value in pairs(plugins) do
+    for _, value in pairs(temp) do
       use(value)
     end
   end)

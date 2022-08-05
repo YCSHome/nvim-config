@@ -1,6 +1,8 @@
 local plugins = {
   ["wbthomason/packer.nvim"] = { },-- 插件管理器
   ["morhetz/gruvbox"] = { },       -- 主题
+  ["folke/tokyonight.nvim"] = { }, -- 主题
+  ["EdenEast/nightfox.nvim"] = { },-- 主题
   ["joshdick/onedark.vim"] = { },
   ["skywind3000/asyncrun.vim"] = {
     ft = {"cpp", "c", "lua", "python"},
@@ -11,10 +13,13 @@ local plugins = {
   ["nvim-treesitter/nvim-treesitter"] = {
     run = ":TSUpdate",
     config = function() 
-      require("expanded.nvim-treesitter")
+      require("plugins.configs.nvim-treesitter")
     end,
     ft = {"cpp", "lua", "c", "python", "sh"},
   },                               -- 高亮着色
+  ["p00f/nvim-ts-rainbow"] = {
+    after = "nvim-treesitter"
+  },  -- 好看的括号匹配
 
   ['neovim/nvim-lspconfig'] = {
     config = function()
@@ -22,42 +27,32 @@ local plugins = {
     end
   },                               -- Lsp 服务器
 
-  ['rafamadriz/friendly-snippets'] = {
-     event = "InsertEnter",
-     module = "cmp_nvim_lsp",
-  },
   ['onsails/lspkind-nvim'] = {
-    after = "friendly-snippets",
   },
+
   ['hrsh7th/nvim-cmp'] = {
-    after = "lspkind-nvim",
+    event = "InsertEnter",
+    requires = {
+      { 'hrsh7th/cmp-nvim-lsp', after = "nvim-cmp", },
+      { 'hrsh7th/cmp-cmdline', after = "nvim-cmp", },
+      { 'hrsh7th/cmp-path', after = "nvim-cmp", },
+      { 'hrsh7th/cmp-buffer', after = "nvim-cmp", },
+      { 'hrsh7th/cmp-vsnip', after = "nvim-cmp", },
+      { 'hrsh7th/vim-vsnip', after = "nvim-cmp", },
+      { 'rafamadriz/friendly-snippets', after = "nvim-cmp"},
+    },
     config = function()
       require("plugins.configs.nvim-cmp")
-    end
+    end,
   },
 
-  ['hrsh7th/cmp-nvim-lsp'] = {
-    after = "nvim-cmp",
-  },
-
-  ['hrsh7th/cmp-cmdline'] = {
-    after = "cmp-nvim-lsp",
-  },
-
-  ['hrsh7th/cmp-path'] = {
-    after = "cmp-cmdline",
-  },
-
-  ['hrsh7th/cmp-buffer'] = {
-    after = "cmp-path",
-  },
-
-  ['hrsh7th/cmp-vsnip'] = {
-    after = "cmp-buffer",
-  },
-
-  ['hrsh7th/vim-vsnip'] = {
-    after = "cmp-vsnip",
+  -- 让我的lsp看起来更好看
+  ["glepnir/lspsaga.nvim"] = {
+    -- after = "nvim-cmp",
+    branch = "main",
+    config = function()
+      require("plugins.configs.lspsaga")
+    end,
   },
 
   -- markdown 预览
@@ -131,6 +126,7 @@ local plugins = {
       require("plugins.configs.aerial")
     end
   },
+
 }
 
 vim.api.nvim_command("packadd packer.nvim")

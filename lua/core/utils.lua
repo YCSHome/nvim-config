@@ -36,21 +36,50 @@ M.add_lsp = function(lsp)
   end
 end
 
+M.load_autocmds = function(autocmds) 
+  create = vim.api.nvim_create_autocmd
+  for key, value in pairs(autocmds) do
+    create(value[1], value[2]);
+  end
+end
+
+M.load_ui_config = function(ui)
+  local set_sign = vim.fn.sign_define
+  if ui.theme ~= nil then
+    cmd("color "..ui.theme)
+  end
+  if ui.signs ~= nil then
+    for name_, text_ in pairs(ui.signs) do
+      local temp = "DiagnosticSign" .. name_
+      set_sign(temp, {text = text_, texthl = temp, numhl = 'DiagnosticDefault' .. name_})
+    end
+  end
+end
+
 M.load_config = function(config)
   for key, value in pairs(config) do
     if key == "vim" then
-      for _key, _value in pairs(value.opt) do
-        vim.opt[_key] = _value
+      if value.diagnostic ~= nil then
+        vim.diagnostic.config(value.diagnostic)
       end
-      for _key, _value in pairs(value.g) do
-        vim.g[_key] = _value
+      if value.opt ~= nil then
+        for _key, _value in pairs(value.opt) do
+          vim.opt[_key] = _value
+        end
+      end
+      if value.g ~= nil then
+        for _key, _value in pairs(value.g) do
+          vim.g[_key] = _value
+        end
       end
     elseif key == "mappings" then
       M.load_mappings(value)
     elseif key == "lsp" then
       M.add_lsp(value)
     elseif key == "ui" then
-      cmd("color "..value.theme)
+      M.load_ui_config(value)
+    elseif key == "autocmds" then
+      M.load_autocmds(value)
     end
   end
 end

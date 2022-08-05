@@ -36,12 +36,8 @@ M.codeList.Cpp = {
   end,
   run = function()
     local t
-    if System == "Linux" then
-      t = "./a.out<~/.input"
-    else
-      t = "a.exe</input"
-    end
-    M.code.run(M.code.options, "clang++ $(VIM_FILENAME) && echo build && "..t.." && echo done")
+    t = "./a.out<~/.input"
+    M.code.run(M.code.options, "clang++-14 $(VIM_FILENAME) && echo build && "..t.." && echo done")
   end
 }
 
@@ -82,10 +78,6 @@ M.config.mappings = {
     },
   }
 }
-
-if System == "Windows" then
-  M.code.options.mode = "os"
-end
 
 require("core.utils").load_config(M.config)
 
