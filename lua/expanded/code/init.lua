@@ -37,7 +37,7 @@ M.codeList.Cpp = {
   run = function()
     local t
     t = "./a.out<~/.input"
-    M.code.run(M.code.options, "clang++-14 $(VIM_FILENAME) && echo build && "..t.." && echo done")
+    M.code.run(M.code.options, "clang++-14 -std=c++17 $(VIM_FILENAME) && echo build && "..t.." && echo done")
   end
 }
 
@@ -67,6 +67,15 @@ M.codeList.python = {
 }
 
 M.config.mappings = {
+  ["<leader>dbb"] = {
+    "n",
+    function()
+      if vim.opt.filetype._value == 'cpp' then
+        M.run("clang++-14 -std=c++17 -g $(VIM_FILENAME)")
+      end
+    end,
+    { noremap = false, silent = true, },
+  },
   ["<leader>b"] = {
     "n",
     function()
@@ -76,9 +85,14 @@ M.config.mappings = {
       noremap = true,
       silent = true,
     },
-  }
+  },
 }
 
 require("core.utils").load_config(M.config)
+
+-- 默认的编译操作
+M.run = function(cmd)
+  M.code.run(M.code.options, cmd)
+end
 
 return M

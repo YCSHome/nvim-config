@@ -1,3 +1,13 @@
+local repl_config = {
+  {
+    width = 30,
+    number = false,
+    relativenumber = false,
+    signcolumn = "no",
+  },
+  "rightbelow vsplit"
+}
+
 local config = {
   vim = {
     opt = {
@@ -5,7 +15,7 @@ local config = {
       expandtab         = true,
       smartindent       = true,
       autoindent        = true,
-      undofile          = true,
+      -- undofile          = true,
       wrap              = false,
       cul               = true,
       number            = true,
@@ -23,8 +33,9 @@ local config = {
       signcolumn        = "yes",
     },
     g = {
-      mkdp_auto_start   = 1,
       background        = "dark",
+      markdown_fenced_languages = { "cpp", "lua", "python", "vim" },
+
     },
     diagnostic = {
       update_in_insert  = true,
@@ -36,6 +47,17 @@ local config = {
     },
   },
   mappings = {
+    -- 重载jk
+    ["k"] = {
+      "n",
+      "gk",
+      {silent = true, noremap = true},
+    },
+    ["j"] = {
+      "n",
+      "gj",
+      {silent = true, noremap = true},
+    },
     -- nvim-tree
     ["t<C-O>"] = {
       "n",
@@ -151,6 +173,46 @@ local config = {
       "n",
       function()
         require("lspsaga.action").smart_scroll_with_saga(-1);
+      end,
+      { silent = true },
+    },
+
+    -- 调试
+    ["<leader>dbo"] = {
+      "n",
+      function()
+        require("dap").repl.open(repl_config[1], repl_config[2])
+      end,
+      { silent = true },
+    },
+    -- 调试开始
+    ["<F5>"] = {
+      "n",
+      function()
+        -- print("编译")
+        -- require("expanded.code").run("clang++-14 -std=c++17 -g $(VIM_FILENAME)")
+        require("dap").continue()
+
+        -- require("dap").run({"a.out"})
+      end,
+      { silent = true },
+    },
+
+    -- 断点
+    ["<F29>"] = {
+      "n",
+      function()
+        require("dap").toggle_breakpoint()
+      end,
+      { silent = true },
+    },
+
+    ["<F41>"] = {
+      "n",
+      function()
+        local widgets = require('dap.ui.widgets')
+        local my_sidebar = widgets.sidebar(widgets.scopes)
+        my_sidebar.open()
       end,
       { silent = true },
     },

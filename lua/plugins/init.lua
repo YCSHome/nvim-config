@@ -22,6 +22,7 @@ local plugins = {
   },  -- 好看的括号匹配
 
   ['neovim/nvim-lspconfig'] = {
+    ft = {"cpp", "c"},
     config = function()
       require("plugins.configs.lspconfig")
     end
@@ -49,6 +50,7 @@ local plugins = {
   -- 让我的lsp看起来更好看
   ["glepnir/lspsaga.nvim"] = {
     -- after = "nvim-cmp",
+    after = "nvim-lspconfig",
     branch = "main",
     config = function()
       require("plugins.configs.lspsaga")
@@ -56,16 +58,27 @@ local plugins = {
   },
 
   -- markdown 预览
-  ["iamcco/markdown-preview.nvim"] = {
-    run = "cd app && npm install",
-    setup = function()
-      vim.g.mkdp_filetypes = { "markdown" }
+  ["euclio/vim-markdown-composer"] = {
+    run = "cargo build --release",
+    config = function() 
+       require("plugins.configs.markdown-composer")
     end,
-    ft = { "markdown" },
+    ft = {"markdown"}
   },
+  -- ["iamcco/markdown-preview.nvim"] = {
+  --   run = "cd app && npm install",
+  --   setup = function()
+  --     require("plugins.configs.markdown")
+  --   end,
+  --   ft = { "markdown" },
+  -- },
 
-  -- 一个管理窗口的插件，非常好用
+  -- 关于内置终端
   ["akinsho/toggleterm.nvim"] = {
+    ft = {"cpp", "c", "python", "lua"},
+    config = function()
+      require("plugins.configs.toggleterm")
+    end
   },
 
   -- 突出显示光标下的单词
@@ -83,12 +96,12 @@ local plugins = {
   },
 
   -- 将你可爱的nvim集成到chrome里面去
-  ["glacambre/firenvim"] = {
-    opt = false,
-    run = function() 
-      vim.fn['firenvim#install'](0) 
-    end
-  },
+  -- ["glacambre/firenvim"] = {
+  --   opt = false,
+  --   run = function() 
+  --     vim.fn['firenvim#install'](0) 
+  --   end
+  -- },
 
   -- 有点用但好像又没用的目录树
   ["kyazdani42/nvim-tree.lua"] = {
@@ -122,11 +135,36 @@ local plugins = {
 
   -- 大纲显示
   ["stevearc/aerial.nvim"] = {
+    ft = {"cpp", "c", "lua", "python"},
     config = function()
       require("plugins.configs.aerial")
     end
   },
 
+  -- 调试工具
+  ["mfussenegger/nvim-dap"] = {
+    ft = {"cpp", "c"},
+    config = function()
+      require("plugins.configs.nvim-dap")
+    end,
+    requires = {
+      { "theHamsta/nvim-dap-virtual-text", after = "nvim-dap"},
+    },
+  },
+
+  ["numToStr/Comment.nvim"] = {
+    ft = {"cpp", "c", "lua", "python"}, 
+    config = function()
+      require("plugins.configs.comment")
+    end,
+  },
+
+  -- 一个非常小的插件，可以让我的注释更加具有可读性
+  ["Djancyp/better-comments.nvim"] = {
+    config = function()
+      require("plugins.configs.better-comments")
+    end
+  },
 }
 
 vim.api.nvim_command("packadd packer.nvim")

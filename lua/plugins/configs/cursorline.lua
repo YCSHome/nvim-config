@@ -3,7 +3,7 @@ M.cursorline = require("nvim-cursorline")
 
 M.cursorline.setup {
   cursorline = {
-    enable = true,
+    enable = false,
     timeout = 1000,
     number = false,
   },
@@ -15,4 +15,3 @@ M.cursorline.setup {
 }
 
 return M
-

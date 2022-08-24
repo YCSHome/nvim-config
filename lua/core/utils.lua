@@ -1,6 +1,6 @@
 local M = { }
 
-local cmd = vim.api.nvim_command
+local cmd = vim.api.nvim_cmd
 
 M.merge_plugins = function(plugins) 
   local final_plugins = { }
@@ -46,7 +46,7 @@ end
 M.load_ui_config = function(ui)
   local set_sign = vim.fn.sign_define
   if ui.theme ~= nil then
-    cmd("color "..ui.theme)
+    cmd({cmd = "colorscheme", args = {ui.theme}}, {})
   end
   if ui.signs ~= nil then
     for name_, text_ in pairs(ui.signs) do
