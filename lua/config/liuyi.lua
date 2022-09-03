@@ -169,6 +169,11 @@ local config = {
       end,
       { silent = true },
     },
+    ["<leader><Esc>"] = {
+      "t",
+      [[<C-\><C-n>]],
+      { silent = true },
+    },
     ["<C-b>"] = {
       "n",
       function()

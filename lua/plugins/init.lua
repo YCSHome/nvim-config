@@ -165,6 +165,10 @@ local plugins = {
       require("plugins.configs.better-comments")
     end
   },
+
+  -- 内置终端 plus
+  ["numToStr/FTerm.nvim"] = {
+  },
 }
 
 vim.api.nvim_command("packadd packer.nvim")
